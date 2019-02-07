@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Leader } from '../shared/leader';
-import { LEADERS } from '../shared/leaders';
-import { LeaderService } from '../services/leader.service';
+import { FormBuilder, FormGroup, Validator, Validators } from '@angular/forms';
+import { Feedback, ContactType } from '../shared/feedback';
 
 @Component({
   selector: 'app-contact',
@@ -10,14 +9,35 @@ import { LeaderService } from '../services/leader.service';
 })
 export class ContactComponent implements OnInit {
 
-  leader: Leader[];
+  feedbackForm: FormGroup;
+  feedback: Feedback;
+  contactType = ContactType;
 
   constructor(
-    private leaderService: LeaderService
+    private formBuilder: FormBuilder
+    // private formGroup: FormGroup,
+    // private validator: Validator
   ) { }
 
   ngOnInit() {
-    this.leader = this.leaderService.getLeaderDetails();
+    this.createForm();
   }
 
+  createForm() {
+    this.feedbackForm = this.formBuilder.group({
+      firstname: ['', Validators.required],
+      lastname: '',
+      phone: 0,
+      email: '',
+      agree: false,
+      contacttype: 'None',
+      message: ''
+    });
+  }
+
+  onSubmit() {
+    this.feedback = this.feedbackForm.value;
+    console.log(this.feedback);
+    this.feedbackForm.reset();
+  }
 }

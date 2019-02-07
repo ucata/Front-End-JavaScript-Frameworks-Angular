@@ -12,4 +12,10 @@ export class LeaderService {
   getLeaderDetails(): Leader[] {
     return LEADERS;
   }
+
+  getLeaderFeatured(): Leader {
+    return LEADERS.filter(
+      leader => leader.featured
+    )[0];
+  }
 }
