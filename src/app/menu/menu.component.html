@@ -9,9 +9,9 @@
     </div>
   </div>
 
-  <mat-grid-tile *ngFor="let dish of dishes" (click) = "onSelect(dish)"></mat-grid-tile>
+  <mat-grid-tile *ngFor="let dish of dishes" (click)="onSelect(dish)"></mat-grid-tile>
 
-  <div fxFlex>
+  <div fxFlex *ngIf="dishes">
     <mat-grid-list cols="2" rowHight="200px">
       <mat-grid-tile *ngFor="let dish of dishes" [routerLink]="['/dishdetail', dish.id]">
         <img height="200px" src={{dish.image}} alt={{dish.name}}>
@@ -21,4 +21,10 @@
       </mat-grid-tile>
     </mat-grid-list>
   </div>
+
+  <div fxFlex [hidden]="dishes">
+    <mat-spinner></mat-spinner>
+    <h3>Loading items, please wait ...</h3>
+  </div>
+
 </div>
